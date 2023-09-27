@@ -17,11 +17,11 @@ class MotorDriver(Node):
 
 
         # Setup parameters
-
+"""
         self.declare_parameter('encoder_cpr', value=0)
         if (self.get_parameter('encoder_cpr').value == 0):
             print("WARNING! ENCODER CPR SET TO 0!!")
-
+"""
 
         self.declare_parameter('loop_rate', value=0)
         if (self.get_parameter('loop_rate').value == 0):
@@ -53,7 +53,7 @@ class MotorDriver(Node):
 
         self.speed_pub = self.create_publisher(MotorVels, 'motor_vels', 10)
 
-        self.encoder_pub = self.create_publisher(EncoderVals, 'encoder_vals', 10)
+        #self.encoder_pub = self.create_publisher(EncoderVals, 'encoder_vals', 10)
         
 
         # Member Variables
@@ -81,7 +81,7 @@ class MotorDriver(Node):
     
     def send_pwm_motor_command(self, mot_1_pwm, mot_2_pwm):
         self.send_command(f"o {int(mot_1_pwm)} {int(mot_2_pwm)}")
-
+"""
     def send_feedback_motor_command(self, mot_1_ct_per_loop, mot_2_ct_per_loop):
         self.send_command(f"m {int(mot_1_ct_per_loop)} {int(mot_2_ct_per_loop)}")
 
@@ -90,10 +90,10 @@ class MotorDriver(Node):
         if resp:
             return [int(raw_enc) for raw_enc in resp.split()]
         return []
-
+"""
 
     # More user-friendly functions
-
+"""
     def motor_command_callback(self, motor_command):
         if (motor_command.is_pwm):
             self.send_pwm_motor_command(motor_command.mot_1_req_rad_sec, motor_command.mot_2_req_rad_sec)
@@ -130,7 +130,7 @@ class MotorDriver(Node):
             enc_msg.mot_1_enc_val = self.last_m1_enc
             enc_msg.mot_2_enc_val = self.last_m2_enc
             self.encoder_pub.publish(enc_msg)
-
+"""
 
 
     # Utility functions
@@ -176,7 +176,7 @@ def main(args=None):
     rate = motor_driver.create_rate(2)
     while rclpy.ok():
         rclpy.spin_once(motor_driver)
-        motor_driver.check_encoders()
+        #motor_driver.check_encoders()
 
 
     motor_driver.close_conn()

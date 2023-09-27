@@ -88,7 +88,7 @@
   }
 
 
-#elif defined DM860H_DRIVER
+#elif defined TB6560_DRIVER
   void initMotorController() {
     digitalWrite(RIGHT_MOTOR_ENABLE, HIGH);
     digitalWrite(LEFT_MOTOR_ENABLE, HIGH);

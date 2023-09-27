@@ -63,7 +63,10 @@
    //#define ARDUINO_ENC_COUNTER                                [Z2.]
 
    /* L298 Motor driver*/
-   #define DM860H_DRIVER
+   //#define L298_MOTOR_DRIVER
+
+   /*TB6560 Motor driver*/
+   #define TB6560_DRIVER
 #endif
 
 //#define USE_SERVOS  // Enable use of PWM servos as defined in servos.h

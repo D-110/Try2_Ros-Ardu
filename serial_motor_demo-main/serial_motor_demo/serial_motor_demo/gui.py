@@ -6,7 +6,7 @@ import math
 
 from serial_motor_demo_msgs.msg import MotorCommand
 from serial_motor_demo_msgs.msg import MotorVels
-from serial_motor_demo_msgs.msg import EncoderVals
+#from serial_motor_demo_msgs.msg import EncoderVals
 
 
 class MotorGui(Node):
@@ -21,13 +21,13 @@ class MotorGui(Node):
             'motor_vels',
             self.motor_vel_callback,
             10)
-
+"""
         self.encoder_sub = self.create_subscription(
             EncoderVals,
             'encoder_vals',
             self.encoder_val_callback,
             10)
-
+"""
         self.tk = Tk()
         self.tk.title("Serial Motor GUI")
         root = Frame(self.tk)
@@ -60,7 +60,7 @@ class MotorGui(Node):
         m1_frame = Frame(root)
         m1_frame.pack(fill=X)
         Label(m1_frame, text="Motor 1").pack(side=LEFT)
-        self.m1 = Scale(m1_frame, from_=-255, to=255, orient=HORIZONTAL)
+        self.m1 = Scale(m1_frame, from_=-10, to=10, orient=HORIZONTAL)
         self.m1.pack(side=LEFT, fill=X, expand=True)
 
         m2_frame = Frame(root)
