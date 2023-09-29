@@ -93,7 +93,7 @@ class MotorDriver(Node):
 """
 
     # More user-friendly functions
-"""
+
     def motor_command_callback(self, motor_command):
         if (motor_command.is_pwm):
             self.send_pwm_motor_command(motor_command.mot_1_req_rad_sec, motor_command.mot_2_req_rad_sec)
@@ -103,7 +103,7 @@ class MotorDriver(Node):
             mot1_ct_per_loop = motor_command.mot_1_req_rad_sec * scaler
             mot2_ct_per_loop = motor_command.mot_2_req_rad_sec * scaler
             self.send_feedback_motor_command(mot1_ct_per_loop, mot2_ct_per_loop)
-
+"""
     def check_encoders(self):
         resp = self.send_encoder_read_command()
         if (resp):
