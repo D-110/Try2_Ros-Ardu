@@ -44,6 +44,7 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
+#include <TimerOne.h>                 //Agregados para cambio de frecuencia (del PWM 50%)
 
 #define USE_BASE      // Enable the base controller code
 //#undef USE_BASE     // Disable the base controller code
@@ -251,7 +252,8 @@ int runCommand() {
 /* Setup function--runs once at startup. */
 void setup() {
   Serial.begin(BAUDRATE);
-
+  Timer1.initialize(1000000);         //""        ""    ""    ""    ""      (freq inicial 1 Hz)
+  
 // Initialize the motor controller if used */
 #ifdef USE_BASE
   /*#ifdef ARDUINO_ENC_COUNTER
@@ -275,7 +277,7 @@ void setup() {
     // enable PCINT1 and PCINT2 interrupt in the general interrupt mask
     PCICR |= (1 << PCIE1) | (1 << PCIE2);
   #endif*/
-  initMotorController();
+  //initMotorController();
   resetPID();
 #endif
 
@@ -358,4 +360,3 @@ void loop() {
   }
 #endif*/
 }
-

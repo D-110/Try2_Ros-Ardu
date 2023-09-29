@@ -19,12 +19,12 @@
   /* Wrap the motor driver initialization */
   void initMotorController() {
     drive.init();
-  }
+  }                                   
 
   /* Wrap the drive motor set speed function */
   void setMotorSpeed(int i, int spd) {
     if (i == LEFT) drive.setM1Speed(spd);
-    else drive.setM2Speed(spd);
+    else drive.setM2Speed(spd);     
   }
 
   // A convenience function for setting both motor speeds
@@ -60,8 +60,8 @@
     digitalWrite(RIGHT_MOTOR_ENABLE, HIGH);
     digitalWrite(LEFT_MOTOR_ENABLE, HIGH);
   }
-  
-  void setMotorSpeed(int i, int spd) {
+
+    void setMotorSpeed(int i, int spd) {//los valores que pueden colocar serán de 265 a 26 lo que hará girar al motor de 1/60 rev/s hasta 1/6 rev/s cuando este configurado a 8 microsteps
     unsigned char reverse = 0;
   
     if (spd < 0)
@@ -81,6 +81,7 @@
       else if (reverse == 1) { analogWrite(RIGHT_MOTOR_BACKWARD, spd); analogWrite(RIGHT_MOTOR_FORWARD, 0); }
     }
   }
+
   
   void setMotorSpeeds(int leftSpeed, int rightSpeed) {
     setMotorSpeed(LEFT, leftSpeed);
@@ -89,29 +90,36 @@
 
 
 #elif defined TB6560_DRIVER
-  void initMotorController() {
+  /*void initMotorController() {
     digitalWrite(RIGHT_MOTOR_ENABLE, HIGH);
     digitalWrite(LEFT_MOTOR_ENABLE, HIGH);
+  }*/                                     //En nuestro caso no se ocupa init motor controller porque no usamos el pin del driver de enable
+
+    void setMotorSpeeds(int leftSpeed, int rightSpeed) {  //Solo hace caso del segundo valor 
+    setMotorSpeed(LEFT, leftSpeed);
+    setMotorSpeed(RIGHT, leftSpeed);
   }
-  
   void setMotorSpeed(int i, int spd) {
     unsigned char reverse = 0;
+    int T=0;
   
     if (spd < 0)
     {
       spd = -spd;
       reverse = 1;
     }
-    if (spd > 255)
-      spd = 255;
+    if (spd > 265)
+      spd = 265;
+
+    T=1/spd;    //(Periodo de la señal es igual a 1/f [Hz])
     
     if (i == LEFT) { 
-      if      (reverse == 0) { analogWrite(LEFT_MOTOR_FORWARD, spd); analogWrite(LEFT_MOTOR_BACKWARD, 0); }
-      else if (reverse == 1) { analogWrite(LEFT_MOTOR_BACKWARD, spd); analogWrite(LEFT_MOTOR_FORWARD, 0); }
+      if      (reverse == 0) { digitalWrite(LEFT_MOTOR_CW,1); Timer1.setPeriod(T); Timer1.pwm(LEFT_MOTOR_PULSE,127); } //Todavía no se pueden mover dos motores a velocidades independientes 
+      else if (reverse == 1) { digitalWrite(LEFT_MOTOR_CW,0); Timer1.setPeriod(T); Timer1.pwm(LEFT_MOTOR_PULSE,127); } //Una señal de control CLW debe de conectarse a los dos drives
     }
     else /*if (i == RIGHT) //no need for condition*/ {
-      if      (reverse == 0) { analogWrite(RIGHT_MOTOR_FORWARD, spd); analogWrite(RIGHT_MOTOR_BACKWARD, 0); }
-      else if (reverse == 1) { analogWrite(RIGHT_MOTOR_BACKWARD, spd); analogWrite(RIGHT_MOTOR_FORWARD, 0); }
+      if      (reverse == 0) { digitalWrite(RIGHT_MOTOR_CW,1); Timer1.setPeriod(T); Timer1.pwm(LEFT_MOTOR_PULSE,127); } //Todavía no se pueden mover dos motores a velocidades independientes 
+      else if (reverse == 1) { digitalWrite(RIGHT_MOTOR_CW,0); Timer1.setPeriod(T); Timer1.pwm(LEFT_MOTOR_PULSE,127); } //Una señal de control CLW debe de conectarse a los dos drives
     }
   }
   
