@@ -1,12 +1,11 @@
 # Arduino Motor Controller
 
 This code turns an Arduino into a motor controller!
-It provides a simple serial interface to communicate with a high-level computer (e.g. running ROS), and generates the appropriate PWM signals for a motor driver, to drive two motors.
+It provides a simple serial interface to communicate with a high-level computer (e.g. running ROS), and generates the appropriate PWM signals for a motor driver, to drive at the moment one motor.
 
-This is a fork of the original code, with some changes, and removal of the ROS nodes (see [this repo](https://github.com/joshnewans/serial_motor_demo) for an alternative). Check out `README-orig.md` for the original README.
+This is an adaptation of the fork of the original code, with some changes, and removal of the ROS nodes (see [this repo](https://github.com/joshnewans/serial_motor_demo) for an alternative). Check out `README-orig.md` for the original README.
 
-As I only have need for a subset of the functionality, I have no idea what does and doesn't work, beyond what is detailed below.
-Feedback/improvements are welcome (though no promises on how quickly I'll respond). I currently only use the L298N driver, and the Arduino encoder mode.
+Feedback/improvements are welcome (though no promises on how quickly I'll respond). I currently only use the TB6560 driver.
 
 
 
